@@ -49,31 +49,31 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'noggong.urls'
+ROOT_URLCONF = 'studybee_5.urls'
 
-WSGI_APPLICATION = 'noggong.wsgi.application'
+WSGI_APPLICATION = 'studybee_5.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.mysql',
-        'ENGINE': 'mysql.connector.django',
-        'NAME': 'rdbms',
-        'USER': 'root',
-        'PASSWORD': 'secret',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         #'ENGINE': 'django.db.backends.mysql',
+#         'ENGINE': 'mysql.connector.django',
+#         'NAME': 'rdbms',
+#         'USER': 'root',
+#         'PASSWORD': 'secret',
+#         'HOST': 'localhost',
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
