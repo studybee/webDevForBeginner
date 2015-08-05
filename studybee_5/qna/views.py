@@ -22,14 +22,14 @@ def signup(request):
         "userform": userform,
     })
 
-def home(request, tag=None):
+def home(request):
     return render(request, "index.html")
 
-def about(request, tag=None):
+def about(request):
     return render(request, "about.html")
 
-def question(request, tag=None):
+def question(request):
     return render(request, "question.html")
 
-def login(request, tag=None):
-    return render(request, "login.html")
+def login(request):
+    return render(request, "registration/login.html")
