@@ -8,9 +8,15 @@ urlpatterns = patterns('',
     url(r'^signup_ok/$', TemplateView.as_view(
         template_name='registration/signup_ok.html'
     ), name='signup_ok'),
-    
+
     url(r'^$', 'qna.views.home', name='home'),
     url(r'^about/$', 'qna.views.about', name='about'),
     url(r'^q/$', 'qna.views.question', name='question'),
-    url(r'^login/$', 'qna.views.login', name='login'),
+
+    url(r'^login/$', 'django.contrib.auth.views.login', {
+        # 'authentication_form': LoginForm
+    }, name='login_url'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {
+        'next_page': '/login/',
+    }, name='logout_url'),
 )
