@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^$', 'qna.views.home', name='home'),
     url(r'^about/$', 'qna.views.about', name='about'),
     url(r'^q/$', 'qna.views.question', name='question'),
+    url(r'^post/$', 'qna.views.post', name='post'),
 
     url(r'^login/$', 'django.contrib.auth.views.login', {
         'authentication_form': LoginForm
@@ -20,4 +21,6 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'django.contrib.auth.views.logout', {
         'next_page': '/login/',
     }, name='logout_url'),
+
+    (r'^summernote/', include('django_summernote.urls')),
 )

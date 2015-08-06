@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from qna.forms import SignupForm
+from qna.forms import SignupForm, PostForm
+from django.contrib.auth.decorators import login_required
 
 def signup(request):
     """signup
@@ -33,5 +34,23 @@ def about(request):
 def question(request):
     return render(request, "question.html")
 
-def login(request):
-    return render(request, "registration/login.html")
+@login_required
+def post(request):
+    """
+    posting questions
+    """
+    if request.method == "POST":
+        postform = PostForm(request.POST)
+        if postform.is_valid():
+            post = postform.save(commit=False)
+            post.user = request.user
+            post.save()
+
+            return HttpResponseRedirect(reverse('home'))
+
+    elif request.method == "GET":
+        postform = PostForm()
+
+    return render(request, "post.html", {
+        'postform': postform,
+    })

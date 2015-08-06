@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'qna',
 )
 
+INSTALLED_APPS += ('django_summernote', )
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -110,3 +112,6 @@ STATICFILES_DIRS = (
 )
 
 LOGIN_REDIRECT_URL = '/'
+
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'

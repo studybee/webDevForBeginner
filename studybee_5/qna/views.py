@@ -30,6 +30,3 @@ def about(request):
 
 def question(request):
     return render(request, "question.html")
-
-def login(request):
-    return render(request, "registration/login.html")

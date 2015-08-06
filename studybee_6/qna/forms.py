@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django_summernote.widgets import SummernoteWidget
+from qna.models import Question
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(
@@ -67,4 +69,21 @@ class LoginForm(AuthenticationForm):
                 'required': 'True',
             }
         )
+    )
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ('title', 'content', )
+        
+    title = forms.CharField(required=True, max_length=300,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Title',
+        })
+    )
+    content = forms.CharField(
+        widget=SummernoteWidget(attrs={
+            'placeholder': 'Content',
+        })
     )
