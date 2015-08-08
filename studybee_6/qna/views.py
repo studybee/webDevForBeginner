@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from qna.forms import SignupForm, PostForm
 from django.contrib.auth.decorators import login_required
+from qna.models import Question
 
 def signup(request):
     """signup
@@ -31,8 +32,18 @@ def home(request):
 def about(request):
     return render(request, "about.html")
 
-def question(request):
-    return render(request, "question.html")
+def question(request, question_id=0):
+    """
+    viewing the question
+    """
+    if int(question_id) == 0:
+        HttpResponseRedirect(reverse('home'))
+
+    q = get_object_or_404(Question, id=question_id)
+
+    return render(request, "question.html", {
+        'question': q,
+    })
 
 @login_required
 def post(request):

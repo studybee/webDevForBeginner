@@ -22,5 +22,9 @@ urlpatterns = patterns('',
         'next_page': '/login/',
     }, name='logout_url'),
 
+    url(r'^question/(?P<question_id>[0-9]+)/$',
+        'qna.views.question', name='view_question'
+    ),
+
     (r'^summernote/', include('django_summernote.urls')),
 )
