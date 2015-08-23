@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}qna blog{% endblock %}
+{% block head %}qna blog{% endblock %}
+{% block subhead %}All About Question and Answer{% endblock %}
+{% block img-bg %}{% static 'img/home-bg.jpg' %}{% endblock %}
+
+{% block content %}
+
+    {% for question in questions %}
+        <div class="post-preview">
+            <a href="#">
+                <h2 class="post-title">
+                    <a href="{% url 'view_question' question.id %}">{{ question.title }}</a>
+                </h2>
+            </a>
+            <p class="post-meta">
+                {% if question.tags.count %}
+                    <span class="glyphicon glyphicon-tag" aria-hidden="true" style="font-size: 0.7em;"></span>
+                    {% for tag in question.tags.all %}
+                        <a href="{% url 'tag_search' tag=tag.name %}">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                {% endif %}
+                Posted by {{ question.user.username }} on {{ question.updated_at }}
+            </p>
+        </div>
+    {% empty %}
+        There is yet article.
+    {% endfor %}
+    <br>
+
+    <!-- Pagination -->
+    <ul class="pager">
+        {% if questions.has_previous %}
+            <li>
+                <a href="{% url 'home' %}?page={{ questions.previous_page_number }}">&larr; Newer Posts</a>
+            </li>
+        {% endif %}
+        {% if questions.has_next %}
+            <li>
+                <a href="{% url 'home' %}?page={{ questions.next_page_number }}">Older Posts &rarr;</a>
+            </li>
+        {% endif %}
+    </ul>
+
+{% endblock %}

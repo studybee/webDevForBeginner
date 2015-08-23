@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}log in{% endblock %}
+{% block head %}log in{% endblock %}
+{% block subhead %}Log In Our Service{% endblock %}
+{% block img-bg %}{% static 'img/contact-bg.jpg' %}{% endblock %}
+
+{% block content %}
+
+<!-- Sign In Form -->
+<form id="signin" class="form-horizontal" method="post" action="{% url 'login_url' %}">
+    {% csrf_token %}
+
+    <!-- Username input-->
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group controls">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+    </div>
+
+    <!-- Password input-->
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group controls">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            <span class="field-error">
+                {{ form.non_field_errors|striptags }}
+            </span>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- Sign in Button -->
+    <div class="row">
+        <div class="form-group col-xs-12">
+            <input type="hidden" name="next" value="{{ next }}">
+            <button id="signin" name="signin" class="btn btn-block btn-default" type="submit">Log In</button>
+            <hr>
+            <center>
+            Or <a href="{% url 'signup' %}"><u>sign up</u></a>
+            if you don't have any account.
+            </center>
+        </div>
+    </div>
+
+</form>
+
+{% endblock %}

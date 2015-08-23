@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}{{ question.title }}{% endblock %}
+
+{% block head %}
+    {% with question.title as title %}
+        {{ title|truncatechars:20 }}
+    {% endwith %}
+{% endblock %}
+
+{% block subhead %}
+    Posted by {{ question.user.username }} on {{ question.updated_at }}
+    <br>
+    {% if question.tags.count %}
+        <span class="glyphicon glyphicon-tag" aria-hidden="true" style="font-size: 0.7em;"></span>
+        {% for tag in question.tags.all %}
+            {% if forloop.last %}
+                {{ tag }}
+            {% else %}
+                {{ tag }},
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}
+{% block img-bg %}{% static 'img/question-bg.jpg' %}{% endblock %}
+{% block content %}
+
+<!-- title -->
+<h1>
+    {{ question.title }}
+</h1>
+
+<hr>
+<!-- content -->
+<p>
+    {{ question.content|safe }}
+</p>
+
+<hr>
+<!-- comment form -->
+<p>
+    <form id="commentform" class="form-horizontal" action="{{ request.path }}" method="post">
+        {% csrf_token %}
+
+        <!-- Comment content input-->
+        <div class="row control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                {{ commentform.content.label_tag }}
+                {{ commentform.content }}
+                <span class="field-error">
+                {{ commentform.content.errors|striptags }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Comment Button -->
+        <div class="row">
+            <div class="form-group col-xs-12">
+                <button id="comment" name="comment" class="btn btn-block btn-default" type="submit">Comment</button>
+            </div>
+        </div>
+
+    </form>
+</p>
+
+<!-- view comments -->
+<p>
+    {% if question.comment_set.count %}
+        {% for comment in question.comment_set.all %}
+            <div class="row">
+                <div class="col-xs-1">
+                    <div>
+                        <center><a href="{% url 'comment_popularity' comment_id=comment.id status='up' %}">
+                            <span class="glyphicon glyphicon-menu-up" aria-hidden="true" style="font-size: 0.7em;"></span>
+                        </a></center>
+                    </div>
+                    <div>
+                        <center>
+                            <span class="badge">
+                                {{ comment.popularity }}
+                            </span>
+                        </center>
+                    </div>
+                    <div>
+                        <center>
+                            {% if comment.popularity != 0 %}
+                                <a href="{% url 'comment_popularity' comment_id=comment.id status='down' %}">
+                            {% endif %}
+
+                            <span class="glyphicon glyphicon-menu-down" aria-hidden="true" style="font-size: 0.7em;"></span>
+
+                            {% if comment.popularity != 0 %}
+                                </a>
+                            {% endif %}
+                        </center>
+                    </div>
+                </div>
+                <div class="col-xs-11">
+                    <div>
+                        {{ comment.content }}
+                    </div>
+                    <div><span style="font-size: 16px; font-style: italic;">
+                        commented by {{ comment.user.username }} on {{ comment.created_at }}
+                    </span></div>
+                </div>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        No found comments. Please be the first.
+    {% endif %}
+</p>
+
+{% endblock %}

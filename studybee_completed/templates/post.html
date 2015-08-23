@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}post your question{% endblock %}
+{% block head %}post ur question{% endblock %}
+{% block subhead %}Feel Free to Ask Anything{% endblock %}
+{% block img-bg %}{% static 'img/post-bg.jpg' %}{% endblock %}
+{% block external %}
+
+<!-- Tag-it - Theme CSS -->
+<!--<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">-->
+<link href="{% static 'css/tagit.ui-zendesk.css' %}" rel="stylesheet" type="text/css">
+
+<!-- Tag-it - Essential CSS -->
+<link href="{% static 'css/jquery.tagit.css' %}" rel="stylesheet" type="text/css">
+
+<!-- Tag-it - JS -->
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'js/tag-it.js' %}" type="text/javascript" charset="utf-8"></script>
+
+<!-- Tag-it -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        var sampleTags = [];
+
+        // ul tag
+        $("#myTags").tagit();
+
+        // input tag
+        $('#id_tags').tagit({
+            availableTags: sampleTags
+        });
+    });
+</script>
+
+{% endblock %}
+<!-- Post Content -->
+{% block content %}
+
+<!-- post form -->
+<form id="postform" class="form-horizontal" method="post" action="{% url 'post' %}">
+    {% csrf_token %}
+
+    <!-- Title input-->
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group controls">
+            {{ postform.title.label_tag }}
+            {{ postform.title }}
+            <span class="field-error">
+            {{ postform.title.errors|striptags }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Content input-->
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group controls">
+            {{ postform.content.label_tag }}
+            {{ postform.content|safe }}
+            <span class="field-error">
+            {{ postform.content.errors|striptags }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Tags input-->
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group controls">
+            {{ postform.tags.label_tag  }}
+            {{ postform.tags }}
+            {{ postform.tags.help_text }}
+            <span class="field-error">
+            {{ postform.tags.errors|striptags }}
+            </span>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- Post Button -->
+    <div class="row">
+        <div class="form-group col-xs-12">
+            <button id="post" name="post" class="btn btn-block btn-default" type="submit">Post</button>
+        </div>
+    </div>
+
+</form>
+{% endblock %}
+<hr>
