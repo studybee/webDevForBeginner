@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}welcome to qna blog{% endblock %}
+{% block head %}warm welcome{% endblock %}
+{% block subhead %}You Can Access All Service All The Time{% endblock %}
+{% block img-bg %}{% static 'img/warm-welcome-bg.jpg' %}{% endblock %}
+
+{% block content %}
+
+<center>
+Successfully signed up. Do you want to log in?<br>
+<a href="{% url 'login_url' %}">Log In</a>
+</center>
+
+{% endblock %}
