@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+about
+{% endblock %}
+
+{% block content %}
+<!-- post form -->
+<form id="postform" class="form-horizontal" method="post" action="{% url 'post' %}">
+    {% csrf_token %}
+
+    <!-- Title input-->
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group controls">
+            {{ postform.title.label_tag }}
+            {{ postform.title }}
+            <span class="field-error">
+            {{ postform.title.errors|striptags }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Content input-->
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group controls">
+            {{ postform.content.label_tag }}
+            {{ postform.content|safe }}
+            <span class="field-error">
+            {{ postform.content.errors|striptags }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Tags input-->
+    <div class="row control-group">
+        <div class="form-group col-xs-12 floating-label-form-group controls">
+            {{ postform.tags.label_tag }}
+            {{ postform.tags }}
+            <span class="field-error">
+            {{ postform.tags.errors|striptags }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Post Button -->
+    <div class="row">
+        <div class="form-group col-xs-12">
+            <button id="post" name="post" class="btn btn-block btn-default" type="submit">Post</button>
+        </div>
+    </div>
+
+</form>
+
+{% endblock %}

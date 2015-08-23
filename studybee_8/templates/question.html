@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- title -->
+<h1>
+  {{ question.title }}
+</h1>
+
+<hr>
+<!-- content -->
+<p>
+    {{ question.content|safe }}
+</p>
+
+{% if question.comment_set.count %}
+    {% for comment in question.comment_set.all %}
+        <div class="row">
+            <div class="col-xs-11">
+                <div>
+                    {{ comment.content }}
+                </div>
+                <div><span style="font-size: 16px; font-style: italic;">
+                    commented by {{ comment.user.username }} on {{ comment.created_at }}
+                </span></div>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+{% else %}
+    No found comments. Please be the first.
+{% endif %}
+
+<!-- comment form -->
+<p>
+    <form id="commentform" class="form-horizontal" action="{{ request.path }}" method="post">
+        {% csrf_token %}
+
+        <!-- Comment content input-->
+        <div class="row control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                {{ commentform.content.label_tag }}
+                {{ commentform.content }}
+                {{ commentform.content.errors|striptags }}
+            </div>
+        </div>
+
+        <!-- Comment Button -->
+        <div class="row">
+            <div class="form-group col-xs-12">
+                <button id="comment" name="comment" class="btn btn-block btn-default" type="submit">Comment</button>
+            </div>
+        </div>
+
+    </form>
+</p>
+{% endblock %}
