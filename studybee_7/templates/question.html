@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- title -->
+<h1>
+  {{ question.title }}
+</h1>
+
+<hr>
+<!-- content -->
+<p>
+    {{ question.content|safe }}
+</p>
+{% endblock %}
